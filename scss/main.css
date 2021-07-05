@@ -84,14 +84,19 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin-top: 10px;
-  -ms-flex-line-pack: center;
-      align-content: center;
-  height: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin: 0 10px;
+  margin-bottom: 600px;
+  height: 50%;
 }
 
 .home h1 {
   font-size: 2rem;
+  line-height: 2rem;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .home h2 {
