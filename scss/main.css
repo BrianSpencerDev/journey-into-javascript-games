@@ -1,0 +1,148 @@
+.nav {
+  background-color: black;
+}
+
+.nav a {
+  display: block;
+}
+
+.nav ul {
+  list-style-type: none;
+}
+
+.nav-item-list {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  text-align: center;
+  line-height: 2.3rem;
+}
+
+.nav-btn {
+  display: inline;
+  position: absolute;
+  right: 6px;
+  font-size: 1.5rem;
+}
+
+.logo {
+  display: inline;
+}
+
+@media (min-width: 800px) {
+  .nav {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+  }
+  .nav-btn {
+    display: none;
+  }
+  .nav-item-list {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+  }
+  .nav-item {
+    margin: 0 20px;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+  .nav-item a {
+    display: block;
+    padding-left: 16px;
+    padding-right: 16px;
+    border-radius: 5px 5px 0 0;
+  }
+  .logo {
+    margin-top: 3px;
+  }
+}
+
+.home {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 10px;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  height: 100%;
+}
+
+.home h1 {
+  font-size: 2rem;
+}
+
+.home h2 {
+  font-size: 1rem;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background: #323a3c;
+  color: #6bb0c3;
+  height: 100%;
+}
+
+a {
+  color: #6bb0c3;
+  text-decoration: none;
+}
+
+a:hover {
+  background: #6bb0c3;
+  color: #323a3c;
+}
+
+main {
+  height: 100%;
+  width: 100%;
+}
+
+main .social-icons a {
+  padding: 0.4 rem;
+}
+
+main .social-icons a:hover {
+  color: white;
+  background: #323a3c;
+}
+
+footer {
+  display: absolute;
+  bottom: 0;
+}
+
+.hide {
+  display: none;
+}
+/*# sourceMappingURL=main.css.map */

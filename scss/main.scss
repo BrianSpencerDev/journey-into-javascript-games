@@ -1,0 +1,61 @@
+//config
+@import "variables";
+
+//components
+@import "navbar";
+@import "home";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    height: 100%;
+}
+
+body{
+    background: $secondaryColor;
+    color: $primaryColor;
+    height: 100%;
+}
+
+a {
+    color: $primaryColor;
+    text-decoration: none;
+
+    &:hover{
+        background: $primaryColor;
+        color: $secondaryColor;
+    }
+}
+
+header {
+
+}
+
+main {
+    height: 100%;
+    width: 100%;
+
+    .social-icons {
+        a {
+            padding: 0.4 rem;
+
+            &:hover{
+                color: white;
+                background: $secondaryColor;
+            }
+        }
+    }
+}
+
+footer {
+    display: absolute;
+    bottom: 0;
+}
+
+.hide {
+    display:  none;
+}
+
