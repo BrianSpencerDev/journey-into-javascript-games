@@ -131,6 +131,16 @@
       grid-template-columns: repeat(21, 1fr);
 }
 
+.snake {
+  background-color: #247e24;
+  border: .25vmin solid black;
+}
+
+.food {
+  background-color: coral;
+  border: .25vmin solid black;
+}
+
 * {
   margin: 0;
   padding: 0;
