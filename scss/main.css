@@ -123,6 +123,12 @@
   background-color: #cccccc;
   width: 100vmin;
   height: 100vmin;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: (1fr)[21];
+      grid-template-rows: repeat(21, 1fr);
+  -ms-grid-columns: (1fr)[21];
+      grid-template-columns: repeat(21, 1fr);
 }
 
 * {
