@@ -2,20 +2,20 @@ let lastRenderTime = 0;
 const gameBoard = document.getElementById('game-board')
 
 //snake speed moves x time(s) per second
-const SNAKE_SPEED = 8;
+const SNAKE_SPEED = 10;
 const snakeBody = [{ x: 11, y: 11}, {x: 10, y: 11}, {x: 9, y: 11}];
 
 
-const RIGHT = {x: 1, y: 0}
-const LEFT = {x: -1, y: 0}
-const DOWN = {x: 0, y: 1}
-const UP = {x: 0, y: -1}
+const RIGHT = {x: 1, y: 0};
+const LEFT = {x: -1, y: 0};
+const DOWN = {x: 0, y: 1};
+const UP = {x: 0, y: -1};
 
 let momentum = RIGHT;
 
 //add keyobard listener to page
-window.addEventListener('keydown', handleKeyPress)
-let lastKeyPressed;
+let keyPressed;
+window.addEventListener('keydown', event => { keyPressed = event.key })
 
 function main(currentTime) {
     window.requestAnimationFrame(main)
@@ -41,7 +41,7 @@ window.requestAnimationFrame(main);
 function update() {
 
     //move the snake
-
+    handleKeyPress(keyPressed);
     const newSnakeHead = {
         x: snakeBody[0].x + momentum.x, 
         y: snakeBody[0].y + momentum.y
@@ -77,34 +77,32 @@ function render(gameBoard) {
     })
 }
 
-function handleKeyPress(e) {
-    const keyPress = e.key;
+function handleKeyPress(key) {
 
-    switch(keyPress){
+    switch(key){
         case 'ArrowUp':
-            //dont move up if already going down
+            //do nothing if already going down or up
             if (momentum !== DOWN && momentum !== UP) {
                 momentum = UP;
             }
             break;
         case 'ArrowDown':
-            //dont move down if already going up
+            //do nothing if already going up or down
             if (momentum !== UP && momentum !== DOWN) {
                 momentum = DOWN;
             }
             break;
         case 'ArrowLeft':
-            
+            //do nothing if already going right or left
             if (momentum !== RIGHT && momentum !== LEFT) {
                 momentum = LEFT;
             }
             break;
+            //do nohting if already going left or right
         case 'ArrowRight':
             if (momentum !== LEFT && momentum !== RIGHT) {
                 momentum = RIGHT;
             }
             break;
     }
-
-    lastKeyPressed = keyPress;
 }
