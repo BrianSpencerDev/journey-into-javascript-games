@@ -2,18 +2,30 @@ let lastRenderTime = 0;
 const gameBoard = document.getElementById('game-board')
 
 //snake speed moves x time(s) per second
-const SNAKE_SPEED = 3;
+const SNAKE_SPEED = 8;
 const snakeBody = [{ x: 11, y: 11}, {x: 10, y: 11}, {x: 9, y: 11}];
-const momentum = {x: 1, y: 0}
+
+
+const RIGHT = {x: 1, y: 0}
+const LEFT = {x: -1, y: 0}
+const DOWN = {x: 0, y: 1}
+const UP = {x: 0, y: -1}
+
+let momentum = RIGHT;
 
 //add keyobard listener to page
 window.addEventListener('keydown', handleKeyPress)
-let lastKeyPressed = '';
+let lastKeyPressed;
 
 function main(currentTime) {
     window.requestAnimationFrame(main)
+
     const secondsSinceLastRender = (currentTime - lastRenderTime) / 1000;
 
+    /*
+        check to see if snake needs to move by checking if secondsSinceLasterRender
+        is less than the time between renders
+    */
     if (secondsSinceLastRender < 1 / SNAKE_SPEED) return
 
     console.log("render")
@@ -70,21 +82,28 @@ function handleKeyPress(e) {
 
     switch(keyPress){
         case 'ArrowUp':
-          momentum.x = 0;
-          momentum.y = -1;
-          break;
+            //dont move up if already going down
+            if (momentum !== DOWN && momentum !== UP) {
+                momentum = UP;
+            }
+            break;
         case 'ArrowDown':
-            momentum.x = 0;
-            momentum.y = 1;
-          break;
+            //dont move down if already going up
+            if (momentum !== UP && momentum !== DOWN) {
+                momentum = DOWN;
+            }
+            break;
         case 'ArrowLeft':
-            momentum.x = -1;
-            momentum.y = 0;
-          break;
+            
+            if (momentum !== RIGHT && momentum !== LEFT) {
+                momentum = LEFT;
+            }
+            break;
         case 'ArrowRight':
-            momentum.x = 1;
-            momentum.y = 0;
-          break;
+            if (momentum !== LEFT && momentum !== RIGHT) {
+                momentum = RIGHT;
+            }
+            break;
     }
 
     lastKeyPressed = keyPress;
