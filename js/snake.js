@@ -2,9 +2,13 @@ let lastRenderTime = 0;
 const gameBoard = document.getElementById('game-board')
 
 //snake speed moves x time(s) per second
-const SNAKE_SPEED = 2;
-const snakeBody = [{ x: 11, y: 11}];
+const SNAKE_SPEED = 3;
+const snakeBody = [{ x: 11, y: 11}, {x: 10, y: 11}, {x: 9, y: 11}];
 const momentum = {x: 1, y: 0}
+
+//add keyobard listener to page
+window.addEventListener('keydown', handleKeyPress)
+let lastKeyPressed = '';
 
 function main(currentTime) {
     window.requestAnimationFrame(main)
@@ -25,10 +29,15 @@ window.requestAnimationFrame(main);
 function update() {
 
     //move the snake
-    // snakeBody.forEach(segment => {
-    //     segment.x = segment.x + momentum.x
-    //     segment.y = segment.y + momentum.y
-    // })
+
+    const newSnakeHead = {
+        x: snakeBody[0].x + momentum.x, 
+        y: snakeBody[0].y + momentum.y
+    }
+    //add new head to snake body
+    snakeBody.unshift(newSnakeHead)
+    //"remove" last segment of snake body 
+    snakeBody.pop()
 
     console.log('update')
 }
@@ -36,14 +45,17 @@ function update() {
 //render game graphics
 function render(gameBoard) {
 
+    //clear previous render
+    gameBoard.innerHTML = '';
+
     //render snake
     snakeBody.forEach(segment => {
         // create snake body
         const snakeElement = document.createElement('div')
         
         //position snake body
-        snakeElement.style.gridRowStart = segment.x
-        snakeElement.style.gridColumnStart = segment.y
+        snakeElement.style.gridRowStart = segment.y
+        snakeElement.style.gridColumnStart = segment.x
 
         //add css to snake body
         snakeElement.classList.add('snake')
@@ -51,4 +63,29 @@ function render(gameBoard) {
         //add snake body to array of snake body segments
         gameBoard.appendChild(snakeElement)
     })
+}
+
+function handleKeyPress(e) {
+    const keyPress = e.key;
+
+    switch(keyPress){
+        case 'ArrowUp':
+          momentum.x = 0;
+          momentum.y = -1;
+          break;
+        case 'ArrowDown':
+            momentum.x = 0;
+            momentum.y = 1;
+          break;
+        case 'ArrowLeft':
+            momentum.x = -1;
+            momentum.y = 0;
+          break;
+        case 'ArrowRight':
+            momentum.x = 1;
+            momentum.y = 0;
+          break;
+    }
+
+    lastKeyPressed = keyPress;
 }
