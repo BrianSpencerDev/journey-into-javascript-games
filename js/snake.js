@@ -10,12 +10,14 @@ const RIGHT = {x: 1, y: 0};
 const LEFT = {x: -1, y: 0};
 const DOWN = {x: 0, y: 1};
 const UP = {x: 0, y: -1};
-
 let momentum = RIGHT;
 
 //add keyobard listener to page
 let keyPressed;
 window.addEventListener('keydown', event => { keyPressed = event.key })
+
+//generate initial food position
+const food = generateFood();
 
 function main(currentTime) {
     window.requestAnimationFrame(main)
@@ -63,18 +65,53 @@ function render(gameBoard) {
     //render snake
     snakeBody.forEach(segment => {
         // create snake body
-        const snakeElement = document.createElement('div')
-        
-        //position snake body
-        snakeElement.style.gridRowStart = segment.y
-        snakeElement.style.gridColumnStart = segment.x
-
-        //add css to snake body
-        snakeElement.classList.add('snake')
-
-        //add snake body to array of snake body segments
-        gameBoard.appendChild(snakeElement)
+        renderElement('snake', segment);
     })
+
+    //render food
+    renderElement('food', food);
+
+}
+
+function renderElement(element, position){
+    //create new element
+    const newElement = document.createElement('div');
+
+    //position element on grid
+    newElement.style.gridRowStart = position.y;
+    newElement.style.gridColumnStart = position.x;
+
+    //add css styling to element
+    newElement.classList.add(element);
+
+    //add element to gameboard
+    gameBoard.appendChild(newElement);
+}
+
+function getRandomInt(max) {
+    return Math.floor((Math.random() * max) + 1)
+}
+
+function getRandomGridCoordinate() {
+    return {x: getRandomInt(21), y: getRandomInt(21)};
+}
+
+function isOnSnake(position) {
+    if(snakeBody.includes(position))
+        return true;
+
+    return false;
+}
+
+function generateFood() {
+    const foodPos = getRandomGridCoordinate();
+
+    //regen foodPos until it isnt on snake 
+    while (isOnSnake()) {
+        foodPos = getRandomGridCoordinate();
+    }
+
+    return foodPos;
 }
 
 function handleKeyPress(key) {
