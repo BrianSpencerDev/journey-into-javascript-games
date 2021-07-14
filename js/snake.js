@@ -12,12 +12,14 @@ const DOWN = {x: 0, y: 1};
 const UP = {x: 0, y: -1};
 let momentum = RIGHT;
 
+let score = 0;
+
 //add keyobard listener to page
 let keyPressed;
 window.addEventListener('keydown', event => { keyPressed = event.key })
 
 //generate initial food position
-const food = generateFood();
+let food = generateFood();
 
 function main(currentTime) {
     window.requestAnimationFrame(main)
@@ -30,7 +32,6 @@ function main(currentTime) {
     */
     if (secondsSinceLastRender < 1 / SNAKE_SPEED) return
 
-    console.log("render")
     lastRenderTime = currentTime;
 
     update();
@@ -53,7 +54,18 @@ function update() {
     //"remove" last segment of snake body 
     snakeBody.pop()
 
-    console.log('update')
+    //When snake eats food generate new food
+    if (isOnSnake(food)){
+        food = generateFood();
+
+        //increase score
+        score++;
+        
+        //grow snake
+        snakeBody.push(snakeBody[snakeBody.length - 1])
+    }
+    
+
 }
 
 //render game graphics
@@ -70,6 +82,9 @@ function render(gameBoard) {
 
     //render food
     renderElement('food', food);
+
+    //render score
+    document.getElementById('score').textContent = score;
 
 }
 
@@ -88,6 +103,7 @@ function renderElement(element, position){
     gameBoard.appendChild(newElement);
 }
 
+//gets random integer from 1 to max
 function getRandomInt(max) {
     return Math.floor((Math.random() * max) + 1)
 }
@@ -96,18 +112,26 @@ function getRandomGridCoordinate() {
     return {x: getRandomInt(21), y: getRandomInt(21)};
 }
 
-function isOnSnake(position) {
-    if(snakeBody.includes(position))
+function isPositionEqual(pos1, pos2) {
+    if(pos1.x === pos2.x && pos1.y === pos2.y){
         return true;
+    }
 
     return false;
+}
+
+function isOnSnake(position) {
+    return snakeBody.some(segment => {
+        return isPositionEqual(segment, position)
+    })
+        
 }
 
 function generateFood() {
     const foodPos = getRandomGridCoordinate();
 
     //regen foodPos until it isnt on snake 
-    while (isOnSnake()) {
+    while (isOnSnake(foodPos)) {
         foodPos = getRandomGridCoordinate();
     }
 
