@@ -1,5 +1,6 @@
 let lastRenderTime = 0;
-const gameBoard = document.getElementById('game-board')
+const gameBoard = document.getElementById('game-board');
+let gameOver = false;
 
 //snake speed moves x time(s) per second
 const SNAKE_SPEED = 10;
@@ -22,6 +23,14 @@ window.addEventListener('keydown', event => { keyPressed = event.key })
 let food = generateFood();
 
 function main(currentTime) {
+    if (gameOver) {
+        if (confirm('you lost :(   Press ok to restart')) {
+            window.location = '/pages/snake.html';
+        }
+
+        return
+    }
+
     window.requestAnimationFrame(main)
 
     const secondsSinceLastRender = (currentTime - lastRenderTime) / 1000;
@@ -42,6 +51,7 @@ window.requestAnimationFrame(main);
 
 // update logic of game
 function update() {
+    
 
     //move the snake
     handleKeyPress(keyPressed);
@@ -65,7 +75,8 @@ function update() {
         snakeBody.push(snakeBody[snakeBody.length - 1])
     }
     
-
+    //check to see if snake is dead
+    isDead();
 }
 
 //render game graphics
@@ -136,6 +147,27 @@ function generateFood() {
     }
 
     return foodPos;
+}
+
+function outsideGrid(pos) {
+    if (pos.x < 1 || pos.x > 21 || pos.y < 0 || pos.y > 21)
+        return true
+    
+    return false
+}
+
+// function to check if snake has collided with itself
+function snakeCollision() {
+    return snakeBody.some((segment, index) => {
+        if(index === 0)
+            return false;
+        return isPositionEqual(segment, snakeBody[0])
+    })
+}
+
+function isDead() {
+    if (snakeCollision() || outsideGrid(snakeBody[0]))
+        gameOver = true;
 }
 
 function handleKeyPress(key) {
